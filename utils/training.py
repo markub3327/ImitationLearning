@@ -81,9 +81,6 @@ def Training(datasets='data/', hid=[32, 64], num_frames=4):
         print('|-----------------------------------------------|')
         agent.train(f, a, epochs=1000, top_only=True, callbacks=[WandbCallback()])
         
-        # re-shuffle dataset before fine-tuning
-        f, a = shuffle_dataset(f, a)
-
         print('Run fine-tuning...')
         print('|-----------------------------------------------|')
         agent.train(f, a, epochs=1000, top_only=False, callbacks=[WandbCallback()])
