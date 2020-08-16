@@ -5,20 +5,19 @@ import wandb
 from nets.agent import Agent
 from wandb.keras import WandbCallback
 
-def Training(datasets='data/', hid=[32, 64], num_frames=4):
-    
-    def load_datasets():
+class Dataset:
+    def __init__(self, path='data/', timesteps=4):
         # the list of datasets
-        dat = []
-        
-        # scan datasets
-        with os.scandir(datasets) as entries:
-            for entry in entries:
-                dat.append(entry.path)
-        
-        return dat
+        self.dat = []
+        self.ptr = 0
+        self.timesteps = timesteps
 
-    def read_dataset(path):
+        # scan datasets
+        with os.scandir(path) as entries:
+            for entry in entries:
+                self.dat.append(entry.path)
+    
+    def _read_dataset(self, path):
         with np.load(path) as data:
             f = data['frames']
             a = data['actions']
@@ -26,37 +25,53 @@ def Training(datasets='data/', hid=[32, 64], num_frames=4):
             print(a.shape)
 
             # make timesteps
-            f, a = make_timesteps(f, a, timesteps=num_frames)
+            f, a = self._make_timesteps(f, a)
             print(f.shape)
             print(a.shape)
 
             # shuffle dataset after loading from file
-            f, a = shuffle_dataset(f, a)
+            f, a = self._shuffle_dataset(f, a)
         
+        print(f"Loaded dataset from: {path}")
+
         return f, a
 
-    def make_timesteps(f_dat, a_dat, timesteps):
+    def _make_timesteps(self, f_dat, a_dat):
         # generate random indexes
-        rand_idxs = np.arange(timesteps + 1, f_dat.shape[0], dtype=np.int)
+        rand_idxs = np.arange(self.timesteps + 1, f_dat.shape[0], dtype=np.int)
         print(rand_idxs)
         print(rand_idxs.shape)
 
-        states = np.zeros((rand_idxs.shape[0], timesteps) + f_dat.shape[1:], dtype=np.uint8)
-        #next_states = np.zeros((BATCH_SIZE, POST_PROCESS_IMAGE_SIZE[0], POST_PROCESS_IMAGE_SIZE[1], NUM_FRAMES), dtype=np.float32)
+        states = np.zeros((rand_idxs.shape[0], self.timesteps) + f_dat.shape[1:], dtype=np.uint8)
             
         for i, idx in enumerate(rand_idxs):
-            states[i] = f_dat[idx-timesteps-1:idx-1]
-            #next_states[i] = self._frames[idx-num_frames:idx]
+            states[i] = f_dat[idx-self.timesteps-1:idx-1]
 
-        return states, a_dat[rand_idxs] #, self._rewards[rand_idxs], next_states, self._terminal[rand_idxs]
+        return states, a_dat[rand_idxs]
         
-    def shuffle_dataset(f_dat, a_dat):
+    def _shuffle_dataset(self, f_dat, a_dat):
         idx = np.arange(0, f_dat.shape[0], dtype=np.int)
         print(idx)
         np.random.shuffle(idx)
         print(idx)
 
         return f_dat[idx], a_dat[idx]
+
+    def __iter__(self):
+        self.ptr = 0
+        return self
+
+    def __next__(self):
+        if self.ptr == len(self.dat):
+           raise StopIteration
+        s, a = self._read_dataset(self.dat[self.ptr])
+        self.ptr = self.ptr + 1
+        return s, a
+
+    def __len__(self):
+        pass # return total_samples    (no. of all samples)
+
+def Training(hid=[32, 64], num_frames=4):
 
     wandb.init(project="car_racing")
 
@@ -68,25 +83,21 @@ def Training(datasets='data/', hid=[32, 64], num_frames=4):
     agent.save_plot()
     
     # load datasets from folder
-    datasets = load_datasets()
+    dataset = Dataset(timesteps=num_frames)
 
     # take every dataset from folder
-    for dat in datasets:
+    for s, a in dataset:
         print('+-----------------------------------------------+')
-
-        print(f"Loading data from dataset: {dat}")
-        f, a = read_dataset(dat)
 
         print('Run training...')
         print('|-----------------------------------------------|')
-        agent.train(f, a, epochs=1000, top_only=True, callbacks=[WandbCallback()])
+        agent.train(s, a, epochs=1000, top_only=True, callbacks=[WandbCallback()])
         
         print('Run fine-tuning...')
         print('|-----------------------------------------------|')
-        agent.train(f, a, epochs=1000, top_only=False, callbacks=[WandbCallback()])
+        agent.train(s, a, epochs=1000, top_only=False, callbacks=[WandbCallback()])
 
         print('+-----------------------------------------------+')
 
     # save model
     agent.save()
-
