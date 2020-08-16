@@ -15,6 +15,8 @@ The model is trained on many datasets. In this repo are created & prepared datas
 
 ![Preview](preview.gif)
 
+> In the future, this project will be the basis for working on robot interacting with the real world. This simulation helps pre-train model on the track, then robot drives according to it. The big power is stored in deep vision model for processing images from the environment.
+
 #### Links
 
 * [Transfer learning with a pretrained ConvNet](https://www.tensorflow.org/tutorials/images/transfer_learning)
@@ -41,7 +43,7 @@ Brake | (0, 1) | sigmoid()
 
 - [x] **Human expert’s demonstrations** + **Transfer** learning
 - [x] Using the **recurrent layer** before the output layer.
-- [ ] **Actor+Critic** method to increase the agent's score in the game.
+- [ ] Deploy the trained model to practical testing on the real robot from simulated game environment.
 
 ## Model
 
