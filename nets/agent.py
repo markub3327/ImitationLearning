@@ -57,7 +57,7 @@ class Agent:
             # Freeze all the layers before the `fine_tune_at` layer
             for layer in self._base_model.layers[:fine_tune_at]:
                 layer.trainable =  False
-            self._model.compile(optimizer=Adam(learning_rate=self.lr/10.0), loss='mse')
+            self._model.compile(optimizer=Adam(learning_rate=self.lr/10.0, amsgrad=True), loss='mse')
 
             # show model
             self._model.summary()
@@ -65,7 +65,7 @@ class Agent:
             # Freeze the base model
             self._base_model.trainable = False
 
-            self._model.compile(optimizer=Adam(learning_rate=self.lr), loss='mse')
+            self._model.compile(optimizer=Adam(learning_rate=self.lr, amsgrad=True), loss='mse')
 
             # show model
             self._model.summary()
