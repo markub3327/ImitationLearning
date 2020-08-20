@@ -43,7 +43,7 @@ Brake | (0, 1) | sigmoid()
 
 - [x] **Human expert’s demonstrations** + **Transfer** learning
 - [x] Using the **recurrent layer** before the output layer.
-- [ ] Deploy the trained model to practical testing on the real robot from simulated game environment.
+- [ ] Deploy the trained model to practical testing on the real robot.
 
 ## Model
 
