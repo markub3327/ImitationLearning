@@ -1,9 +1,6 @@
 # CarRacing
 
-[![Release](https://img.shields.io/github/release/markub3327/OpenAI-CarRacing-RNN.svg)](https://github.com/markub3327/OpenAI-CarRacing-RNN/releases)
-[![Release-date](https://img.shields.io/github/release-date/markub3327/OpenAI-CarRacing-RNN)](https://github.com/marhor3327/OpenAI-CarRacing-RNN/releases)
 ![Size](https://img.shields.io/github/repo-size/markub3327/OpenAI-CarRacing-RNN.svg)
-![Downloads](https://img.shields.io/github/downloads/markub3327/OpenAI-CarRacing-RNN/total)
 ![Commit-activity](https://img.shields.io/github/commit-activity/m/markub3327/OpenAI-CarRacing-RNN)
 ![Last-commit](https://img.shields.io/github/last-commit/markub3327/OpenAI-CarRacing-RNN)
 ![Platform](https://img.shields.io/badge/platform-osx%2C%20win%2C%20linux-informational)
