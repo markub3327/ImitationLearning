@@ -43,7 +43,7 @@ class Agent:
 
             # show model
             self._model.summary()
-        else
+        else:
             self._base_model.trainable = True
 
             # Let's take a look to see how many layers are in the base model
