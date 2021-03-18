@@ -1,8 +1,8 @@
 # CarRacing
 
-![Size](https://img.shields.io/github/repo-size/markub3327/OpenAI-CarRacing-RNN.svg)
-![Commit-activity](https://img.shields.io/github/commit-activity/m/markub3327/OpenAI-CarRacing-RNN)
-![Last-commit](https://img.shields.io/github/last-commit/markub3327/OpenAI-CarRacing-RNN)
+![Size](https://img.shields.io/github/repo-size/markub3327/ImitationLearning)
+![Commit-activity](https://img.shields.io/github/commit-activity/m/markub3327/ImitationLearning)
+![Last-commit](https://img.shields.io/github/last-commit/markub3327/ImitationLearning)
 ![Platform](https://img.shields.io/badge/platform-osx%2C%20win%2C%20linux-informational)
 
 ## Theory
@@ -48,10 +48,9 @@ Brake | (0, 1) | sigmoid()
 
 ## Charts
 
-![chart_01](chart_02.png)
 ![chart_02](chart_01.png)
-![chart_03](chart_03.png)
+![chart_03](chart_02.png)
 
 ## License
 
-[![MIT](https://img.shields.io/github/license/markub3327/OpenAI-CarRacing-RNN.svg)](LICENSE)
+[![MIT](https://img.shields.io/github/license/markub3327/ImitationLearning)](LICENSE)
