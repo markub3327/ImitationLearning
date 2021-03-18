@@ -49,7 +49,7 @@ Brake | (0, 1) | sigmoid()
 ## Charts
 
 ![chart_02](chart_01.png)
-![chart_03](chart_02.png)
+![chart_03](chart_03.png)
 
 ## License
 
